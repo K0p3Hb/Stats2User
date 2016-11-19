@@ -41,7 +41,7 @@ public class Content extends HttpServlet {
       ResultSet rs = null;
       rs = statement.executeQuery("select match_id from matches");
       while(rs.next()){
-        allMathes += "<A href = \"/MatchDetail2User?id=" + rs.getLong(1) + "\">" + rs.getLong(1) + "\n</br>";
+        allMathes += "<A href = \"/Stats2User/MatchDetail2User?id=" + rs.getLong(1) + "\">" + rs.getLong(1) + "\n</br>";
       }
     }catch (Exception e){
       e.printStackTrace();
@@ -50,7 +50,7 @@ public class Content extends HttpServlet {
     PrintWriter out = response.getWriter();
     out.write("<!DOCTYPE html>\n" +
        "<html>\n" +
-       "<head><title>All matches from base</title></head>\n" +
+       "<head><style type = \"text/css\"></style><title>All matches from base</title></head>\n" +
        "<body bgcolor=\"#fdf5e6\">\n" +
        allMathes+
        "</body></html>");

@@ -30,8 +30,8 @@ public class MatchDetail2User extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     
     try {
-      // long id = Long.valueOf(request.getParameter("id"));
-      long id = 1762832017L;
+      long id = Long.valueOf(request.getParameter("id"));
+      // long id = 1762832017L;
       String mathOverView = new String(), slots = new String(), perks = new String();
       
       // создаём пустой коннект к базе
@@ -53,17 +53,30 @@ public class MatchDetail2User extends HttpServlet {
         rs = statementMatch.executeQuery();
         rs1 = statementSlot.executeQuery();
         while (rs.next()) {
-          mathOverView += "<table><th>Номер матча</th><th>Длительность</th><th>Режим</th><th>Дата</th><tr><td>"
+          mathOverView += "<table width = 100%><th>Match number</th><th>Duration</th><th>Game mode</th><th>Date</th><tr align = \"center\"><td>"
               + rs.getLong(1) + "</td><td>" + rs.getInt(2) / 60 + ":" + rs.getInt(2) % 60 + "</td><td>" + rs.getInt(3)
-              + "</td><td>" + "</td><td>";
+              + "</td><td>" + "</td><td></table>";
         }
+        rs1.next();
+        slots = "<div ><table width = 50%>"
+            + "<td width = 25%>"
+            + "<tr>" + rs1.getInt(2) + "</tr>"
+            + "<tr><td>" + rs1.getInt(8)  + "</td><td>" + rs1.getInt(9) + "</td><td>" + rs1.getInt(10) + "</td></tr>"
+            + "<tr><td>" + rs1.getInt(11) + "</td><td>" + rs1.getInt(12) + "</td><td>" + rs1.getInt(13) + "</td></tr>"
+            + "</td>" 
+            + "<td width = 25%>"
+            + "<tr> " + rs1.getLong(3) + " </tr><tr> " + rs1.getLong(19) + " </tr><tr> " + rs1.getLong(19) + " </tr>"
+            + "</td>"
+            + "</table></div>";
       } catch (Exception e) {
         e.printStackTrace();
       }
       
       PrintWriter out = response.getWriter();
-      out.write("<!DOCTYPE html>\n" + "<html>\n" + "<head><meta charset=\"windows-1251\"><title>Details for Match</title></head>\n"
-          + "<body bgcolor=\"#fdf5e6\">\n" + mathOverView + "</body></html>");
+      out.write("<!DOCTYPE html>\n" + "<html>\n"
+          + "<head><meta charset=\"windows-1251\"><style type = \"text/css\">.layer1, .layer2 {background: #F2EFE6; border: 1px solid #B25538; padding: 10px; margin: 20px;}</style><title>Details for Match</title></head>\n"
+          + "<body bgcolor=\"#fdf5e6\"><div class=\"layer1\">" + mathOverView + "</div>" + "<div class=\"layer2\">"
+          + slots + "</div>" + "</body></html>");
     } catch (Exception e) {
       e.printStackTrace();
     }
