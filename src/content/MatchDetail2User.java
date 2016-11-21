@@ -59,17 +59,22 @@ public class MatchDetail2User extends HttpServlet {
               + rs.getLong(1) + "</td><td>" + rs.getInt(2) / 60 + ":" + rs.getInt(2) % 60 + "</td><td>" + rs.getInt(3)
               + "</td><td>" + "</td><td></table>";
         }
-        rs1.next();
-        slots = "<div ><table width = 50%, border = 2px><tr><th>1</th><th>2</th><th>3</th><th>4</th></tr>"
-            + "<tr align = \"center\"><td>" + rs1.getInt(2) + "</td><td>" + rs1.getLong(3)
-            + " </td><td><table><tr align = \"center\"><td>" + rs1.getLong(5) + "</td><td>" + rs1.getLong(6)
-            + "</td><td>" + rs1.getLong(7) + "</td></tr></table></td><td>" + (rs1.getLong(14) / (rs.getInt(2) / 60))
-            + "</td></tr>" + "<tr align = \"center\"><td>" + "<table><tr align = \"center\"><td>" + rs1.getLong(8)
-            + "</td><td>" + rs1.getLong(9) + "</td><td>" + rs1.getLong(10) + "</td></tr>"
-            + "<tr align = \"center\"><td>" + rs1.getLong(11) + "</td><td>" + rs1.getLong(12) + "</td><td>"
-            + rs1.getLong(13) + "</td></tr></table>" + "</td><td><table><tr><td>" + rs1.getLong(19) + "</td></tr><tr><td>"
-            + rs1.getLong(20) + "</td></tr></table></td><td>" + rs1.getInt(21) + "</td><td><table><tr><td>" + (rs1.getLong(16) / (rs.getInt(2) / 60)) + "</td></tr><tr><td>"
-            + new BigDecimal((rs1.getLong(18) / (rs.getInt(2) / 60f))).setScale(1, RoundingMode.HALF_UP).floatValue() + "</td></tr></table></td></tr>" + "</table></div>";
+        while (rs1.next())
+          if (rs1.getInt(4) < 5)
+            slots += ("<div ><table width = 50%, border = 2px><tr><th width = 30%>1</th><th>2</th><th>3</th><th>4</th></tr>"
+                + "<tr align = \"center\"><td>" + rs1.getInt(2) + "</td><td>" + rs1.getLong(3)
+                + " </td><td><table><tr align = \"center\"><td>" + rs1.getLong(5) + "</td><td>" + rs1.getLong(6)
+                + "</td><td>" + rs1.getLong(7) + "</td></tr></table></td><td>" + (rs1.getLong(14) / (rs.getInt(2) / 60))
+                + "</td></tr>" + "<tr align = \"center\"><td>" + "<table><tr align = \"center\"><td>" + rs1.getLong(8)
+                + "</td><td>" + rs1.getLong(9) + "</td><td>" + rs1.getLong(10) + "</td></tr>"
+                + "<tr align = \"center\"><td>" + rs1.getLong(11) + "</td><td>" + rs1.getLong(12) + "</td><td>"
+                + rs1.getLong(13) + "</td></tr></table>" + "</td><td><table><tr><td>" + rs1.getLong(19)
+                + "</td></tr><tr><td>" + rs1.getLong(20) + "</td></tr></table></td><td>" + rs1.getInt(21)
+                + "</td><td><table><tr><td>" + (rs1.getLong(16) / (rs.getInt(2) / 60))
+                + "</td></tr><tr><td>" + new BigDecimal((rs1.getLong(18) / (rs.getInt(2) / 60f)))
+                    .setScale(1, RoundingMode.HALF_UP).floatValue()
+                + "</td></tr></table></td></tr>" + "</table></div>");
+                
       } catch (Exception e) {
         e.printStackTrace();
       }
