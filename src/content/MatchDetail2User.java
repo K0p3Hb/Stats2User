@@ -1,4 +1,4 @@
-package content;
+п»їpackage content;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,15 +36,15 @@ public class MatchDetail2User extends HttpServlet {
       // long id = 1762832017L;
       String mathOverView = new String(), slotsRadiant = new String(), slotsDire = new String(), perks = new String();
       
-      // создаём пустой коннект к базе
+      // СЃРѕР·РґР°С‘Рј РїСѓСЃС‚РѕР№ РєРѕРЅРЅРµРєС‚ Рє Р±Р°Р·Рµ
       Connection connect = null;
       try {
-        // Загружаем драйвер
+        // Р—Р°РіСЂСѓР¶Р°РµРј РґСЂР°Р№РІРµСЂ
         Class.forName("org.postgresql.Driver");
-        // System.out.println("Драйвер подключен");
-        // Создаём соединение
+        // System.out.println("Р”СЂР°Р№РІРµСЂ РїРѕРґРєР»СЋС‡РµРЅ");
+        // РЎРѕР·РґР°С‘Рј СЃРѕРµРґРёРЅРµРЅРёРµ
         connect = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Dota2stat", "postgres", "qwerty");
-        // System.out.println("Соединение установлено");
+        // System.out.println("РЎРѕРµРґРёРЅРµРЅРёРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ");
         PreparedStatement statementMatch = null, statementSlot = null;
         statementMatch = connect.prepareStatement("select * from matches where match_id = ?");
         statementSlot = connect
