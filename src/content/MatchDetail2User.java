@@ -61,11 +61,12 @@ public class MatchDetail2User extends HttpServlet {
               + "</td><td>" + "</td><td></table>";
         }
         int num;
+
         // заполняем слоты игроков
         while (rs1.next()) {
           num = rs1.getInt(4);
           // команда светлых
-          if (num < 5){
+          if (num < 5){      
             slotsRadiant.append("<div>");
               slotsRadiant.append("<table border = 2px, cellspacing = 5px, width = 100%>");
                 slotsRadiant.append("<tr align = \"center\">");
@@ -182,11 +183,8 @@ public class MatchDetail2User extends HttpServlet {
               slotsDire.append("<div>");
               slotsDire.append("<table border = 2px, cellspacing = 5px, width = 100%>");
                 slotsDire.append("<tr align = \"center\">");
-                  slotsDire.append("<td width = 30%>");
-                    slotsDire.append(rs1.getInt(2)); //герой
-                  slotsDire.append("</td>");
-                  slotsDire.append("<td width = 30%>");
-                    slotsDire.append(rs1.getLong(3)); //аккаунт
+                  slotsDire.append("<td width = 10%>");
+                    slotsDire.append(rs1.getLong(14)/(rs.getInt(2)/60));//урон героям в минуту
                   slotsDire.append("</td>");
                   slotsDire.append("<td width = 30%>");
                     slotsDire.append("<table>");
@@ -203,11 +201,45 @@ public class MatchDetail2User extends HttpServlet {
                       slotsDire.append("</tr>");
                     slotsDire.append("</table>");
                   slotsDire.append("</td>");
-                  slotsDire.append("<td width = 10%>");
-                    slotsDire.append(rs1.getLong(14)/(rs.getInt(2)/60));//урон героям в минуту
+                  slotsDire.append("<td width = 30%>");
+                    slotsDire.append(rs1.getLong(3)); //аккаунт
+                  slotsDire.append("</td>");
+                  slotsDire.append("<td width = 30%>");
+                    slotsDire.append(rs1.getInt(2)); //герой
                   slotsDire.append("</td>");
                 slotsDire.append("</tr>");
                 slotsDire.append("<tr align = \"center\">");
+                  slotsDire.append("<td>");
+                    slotsDire.append("<table width = 100%>");
+                      slotsDire.append("<tr align = \"center\">");
+                        slotsDire.append("<td>");
+                          slotsDire.append(rs1.getLong(16)/(rs.getInt(2)/60));
+                        slotsDire.append("</td>");
+                      slotsDire.append("</tr>");
+                      slotsDire.append("<tr align = \"center\">");
+                        slotsDire.append("<td>");
+                          slotsDire.append(new BigDecimal((rs1.getLong(18)/(rs.getInt(2)/60f))) .setScale(1, RoundingMode.HALF_UP).floatValue());
+                        slotsDire.append("</td>");
+                      slotsDire.append("</tr>");
+                    slotsDire.append("</table>");
+                  slotsDire.append("</td>");
+                  slotsDire.append("<td>");
+                    slotsDire.append(rs1.getInt(21) + "%");//% участия в убийствах команды
+                  slotsDire.append("</td>");  
+                  slotsDire.append("<td>");
+                    slotsDire.append("<table width = 100%>");
+                      slotsDire.append("<tr align = \"center\">");
+                        slotsDire.append("<td>");
+                          slotsDire.append(rs1.getLong(19));//золото за весь матч
+                        slotsDire.append("</td>");
+                      slotsDire.append("</tr>");
+                      slotsDire.append("<tr align = \"center\">");
+                        slotsDire.append("<td>");
+                            slotsDire.append(rs1.getLong(20));//опыт за весь матч
+                        slotsDire.append("</td>");
+                      slotsDire.append("</tr>");
+                    slotsDire.append("</table>");
+                  slotsDire.append("</td>");  
                   slotsDire.append("<td>");
                     slotsDire.append("<table border = 1px, width = 100%>");//вещи в инвентаре героя (6штук)
                       slotsDire.append("<tr>");
@@ -233,38 +265,7 @@ public class MatchDetail2User extends HttpServlet {
                         slotsDire.append("</td>");
                       slotsDire.append("</tr>");
                     slotsDire.append("</table>");
-                  slotsDire.append("</td>");
-                  slotsDire.append("<td>");
-                    slotsDire.append("<table width = 100%>");
-                      slotsDire.append("<tr align = \"center\">");
-                        slotsDire.append("<td>");
-                          slotsDire.append(rs1.getLong(19));//золото за весь матч
-                        slotsDire.append("</td>");
-                      slotsDire.append("</tr>");
-                      slotsDire.append("<tr align = \"center\">");
-                        slotsDire.append("<td>");
-                        slotsDire.append(rs1.getLong(20));//опыт за весь матч
-                        slotsDire.append("</td>");
-                      slotsDire.append("</tr>");
-                    slotsDire.append("</table>");
-                  slotsDire.append("</td>");
-                  slotsDire.append("<td>");
-                    slotsDire.append(rs1.getInt(21) + "%");//% участия в убийствах команды
-                  slotsDire.append("</td>");
-                  slotsDire.append("<td>");
-                    slotsDire.append("<table width = 100%>");
-                      slotsDire.append("<tr align = \"center\">");
-                        slotsDire.append("<td>");
-                          slotsDire.append(rs1.getLong(16)/(rs.getInt(2)/60));
-                        slotsDire.append("</td>");
-                      slotsDire.append("</tr>");
-                      slotsDire.append("<tr align = \"center\">");
-                        slotsDire.append("<td>");
-                          slotsDire.append(new BigDecimal((rs1.getLong(18)/(rs.getInt(2)/60f))) .setScale(1, RoundingMode.HALF_UP).floatValue());
-                        slotsDire.append("</td>");
-                      slotsDire.append("</tr>");
-                    slotsDire.append("</table>");
-                  slotsDire.append("</td>");
+                  slotsDire.append("</td>"); 
                 slotsDire.append("</tr>");
               slotsDire.append("</table>");
             slotsDire.append("</div");
@@ -285,20 +286,26 @@ public class MatchDetail2User extends HttpServlet {
                   + "</table></div>");
               */
         }
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-      
+
+      String caption = new String();
+      if(rs.getBoolean(4))
+        caption = "<td>Radiant <b><i>WIN</i></b></td><td>Dire<td></td>";
+      else
+        caption = "<td>Radiant></td><td>Dire <b><i>WIN</i></b<td></td>";
       PrintWriter out = response.getWriter();
-      out.write("<!DOCTYPE html>\n" + "<html>\n" + "<head><meta charset=\"windows-1251\"><style type = \"text/css\">"
+      out.write("<!DOCTYPE html>\n" + "<html>\n" + "<head><meta charset=\"UTF-8\"><style type = \"text/css\">"
           + ".layer1, .layer2 {background: #F2EFE6; border: 1px solid #B25538; padding: 10px; margin: 20px;},"
           + ".radiant{float: left},.dire{float: right}</style><title>Details for Match</title></head>\n"
           + "<body bgcolor=\"#fdf5e6\"><div class=\"layer1\">" + mathOverView + "</div><div>"
           // + "<p><div class = \"radiant\">" + slotsRadiant + "</div></p>" +
           // "<div class = \"dire\">" + slotsDire
-          + "<table width = 800px, align = \"center\"><tr><td>" + slotsRadiant +"</td><td>" + slotsDire
+          + "<table width = 800px, align = \"center\"><tr  align = \"center\">" + caption + "</tr>"
+          + "<tr><td>" + slotsRadiant +"</td><td>" + slotsDire
           + "</td></tr></table>"
           + "</div>" + "</body></html>");
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
     } catch (Exception e) {
       e.printStackTrace();
     }
