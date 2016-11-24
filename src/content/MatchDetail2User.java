@@ -80,9 +80,111 @@ public class MatchDetail2User extends HttpServlet {
               */
         }
         int num;
-
+        StringBuilder perkHero = new StringBuilder(), perkLast = new StringBuilder(), perkKill = new StringBuilder(), perkTower = new StringBuilder();
+        long topHero, topLast, topKill, topTower;
+        topHero = rs.getLong(5);//игрок нанёсший наибольшее количество урона по героям противника
+        topLast = rs.getLong(6);//добивший больше всех крипов
+        topKill = rs.getLong(7);//наиболее активный убиватор(с учётом ассистов)
+        topTower = rs.getLong(8);//игрок нанёсший наибольшее количество урона по строениям противника
+        
         // заполняем слоты игроков
         while (rs1.next()) {
+          if(rs1.getLong(3)==topHero){
+            perkHero.append("<table width = 100%, align = \"center\", border = 1px, cols = \"1\">");
+              perkHero.append("<tr align = \"center\">");
+                perkHero.append("<td>");
+                  perkHero.append(topHero);
+                perkHero.append("</td>");
+              perkHero.append("</tr>");
+              perkHero.append("<tr align = \"center\">");
+                perkHero.append("<td>");
+                  perkHero.append(rs1.getInt(2));
+                perkHero.append("</td>");
+              perkHero.append("</tr>");
+              perkHero.append("<tr align = \"center\">");
+                perkHero.append("<td>");
+                  perkHero.append(rs1.getLong(14) + "<br>" + " damage dealt");
+                perkHero.append("</td>");
+              perkHero.append("</tr>");
+              perkHero.append("<tr align = \"center\">");
+                perkHero.append("<td>");
+                  perkHero.append(rs1.getLong(15) + "% of command <br> damage");
+                perkHero.append("</td>");
+              perkHero.append("</tr>");
+            perkHero.append("</table>");
+          }
+          if(rs1.getLong(3)==topLast){
+            perkLast.append("<table width = 100%, align = \"center\", border = 1px>");
+              perkLast.append("<tr align = \"center\">");
+                perkLast.append("<td>");
+                  perkLast.append(topLast);
+                perkLast.append("</td>");
+              perkLast.append("</tr>");
+              perkLast.append("<tr align = \"center\">");
+                perkLast.append("<td>");
+                  perkLast.append(rs1.getInt(2));
+                perkLast.append("</td>");
+              perkLast.append("</tr>");
+              perkLast.append("<tr align = \"center\">");
+                perkLast.append("<td>");
+                  perkLast.append(rs1.getLong(18) + "<br>creeps killed");
+                perkLast.append("</td>");
+              perkLast.append("</tr>");
+              perkLast.append("<tr align = \"center\">");
+                perkLast.append("<td>");
+                  perkLast.append(rs1.getLong(19) + "<br>gold earned");
+                perkLast.append("</td>");
+              perkLast.append("</tr>");
+            perkLast.append("</table>");
+          }
+          if(rs1.getLong(3)==topKill){
+            perkKill.append("<table width = 100%, align = \"center\", border = 1px>");
+              perkKill.append("<tr align = \"center\">");
+                perkKill.append("<td>");
+                  perkKill.append(topKill);
+                perkKill.append("</td>");
+              perkKill.append("</tr>");
+              perkKill.append("<tr align = \"center\">");
+                perkKill.append("<td>");
+                  perkKill.append(rs1.getInt(2));
+                perkKill.append("</td>");
+              perkKill.append("</tr>");
+              perkKill.append("<tr align = \"center\">");
+                perkKill.append("<td>");
+                  perkKill.append(rs1.getInt(5) + "kills<br>" + rs1.getInt(7) + "assists");
+                perkKill.append("</td>");
+              perkKill.append("</tr>");
+              perkKill.append("<tr align = \"center\">");
+                perkKill.append("<td>");
+                  perkKill.append(rs1.getLong(21) + "% <br>of command kills");
+                perkKill.append("</td>");
+              perkKill.append("</tr>");
+            perkKill.append("</table>");
+          }
+          if(rs1.getLong(3)==topTower){
+            perkTower.append("<table width = 100%, align = \"center\", border = 1px>");
+              perkTower.append("<tr align = \"center\">");
+                perkTower.append("<td>");
+                  perkTower.append(topTower);
+                perkTower.append("</td>");
+              perkTower.append("</tr>");
+              perkTower.append("<tr align = \"center\">");
+                perkTower.append("<td>");
+                  perkTower.append(rs1.getInt(2));
+                perkTower.append("</td>");
+              perkTower.append("</tr>");
+              perkTower.append("<tr align = \"center\">");
+                perkTower.append("<td>");
+                  perkTower.append(rs1.getInt(5) + "Towers<br>" + rs1.getInt(7) + "assists");
+                perkTower.append("</td>");
+              perkTower.append("</tr>");
+              perkTower.append("<tr align = \"center\">");
+                perkTower.append("<td>");
+                  perkTower.append(rs1.getLong(21) + "% <br>of command Towers");
+                perkTower.append("</td>");
+              perkTower.append("</tr>");
+            perkTower.append("</table>");
+          }
           num = rs1.getInt(4);
           // команда светлых
           if (num < 5){      
@@ -269,49 +371,64 @@ public class MatchDetail2User extends HttpServlet {
             slotsDire.append("</div");
             }
         }
-
-      String caption = new String();
-      StringBuilder page = new StringBuilder();
-      if(rs.getBoolean(4))
-        caption = "<td>Radiant <b><i>WIN</i></b></td><td>Dire<td></td>";
-      else
-        caption = "<td>Radiant></td><td>Dire <b><i>WIN</i></b<td></td>";
-      PrintWriter out = response.getWriter();
-      page.append("<!DOCTYPE html>");
-      page.append("<html>");
-        page.append("<head>");
-          page.append("<meta charset=\"UTF-8\">");
-          page.append("<style type = \"text/css\">");
-            page.append(".layer1, .layer2 {background: #F2EFE6; border: 1px solid #B25538; padding: 10px; margin: 20px;}");
-          page.append("</style>");
-          page.append("<title>");
-            page.append("Details for Match");
-          page.append("</title>");
-        page.append("</head>");
-        page.append("<body bgcolor=\"#fdf5e6\">");
-          page.append("<div class=\"layer1\">");
-            page.append(matchOverView.toString());
-          page.append("</div>");
-          page.append("<div>");
-            page.append("<table width = 800px, align = \"center\">");
-              page.append("<tr  align = \"center\">");
-                page.append(caption);
-              page.append("</tr>");
-              page.append("<tr  align = \"center\">");
-                page.append("<td>");
-                  page.append(slotsRadiant.toString());
-                page.append("</td>");
-                page.append("<td>");
-                  page.append(slotsDire.toString());
-                page.append("</td>");
-              page.append("</tr>");
-            page.append("</table>");
-          page.append("</div>");
-          page.append("<div>");
-          page.append("</div>");
-        page.append("</body>");
-      page.append("</html>");
-      out.write(page.toString());      
+        String caption = new String();
+        StringBuilder page = new StringBuilder();
+        if(rs.getBoolean(4))
+          caption = "<td>Radiant <b><i>WIN</i></b></td><td>Dire<td></td>";
+        else
+          caption = "<td>Radiant></td><td>Dire <b><i>WIN</i></b<td></td>";
+        PrintWriter out = response.getWriter();
+        page.append("<!DOCTYPE html>");
+        page.append("<html>");
+          page.append("<head>");
+            page.append("<meta charset=\"UTF-8\">");
+            page.append("<style type = \"text/css\">");
+              page.append(".layer1, .layer2 {background: #F2EFE6; border: 1px solid #B25538; padding: 10px; margin: 20px;}");
+            page.append("</style>");
+            page.append("<title>");
+              page.append("Details for Match");
+            page.append("</title>");
+          page.append("</head>");
+          page.append("<body bgcolor=\"#fdf5e6\">");
+            page.append("<div class=\"layer1\">");
+              page.append(matchOverView.toString());
+            page.append("</div>");
+            page.append("<div>");
+              page.append("<table width = 800px, align = \"center\">");
+                page.append("<tr  align = \"center\">");
+                  page.append(caption);
+                page.append("</tr>");
+                page.append("<tr  align = \"center\">");
+                  page.append("<td>");
+                    page.append(slotsRadiant.toString());
+                  page.append("</td>");
+                  page.append("<td>");
+                    page.append(slotsDire.toString());
+                  page.append("</td>");
+                page.append("</tr>");
+              page.append("</table>");
+            page.append("</div>");
+            page.append("<div>");
+              page.append("<table width = 800px, border = 2px, align = \"center\">");
+                page.append("<tr align = \"center\", cols = \"4\">");
+                  page.append("<td width = 25%>");
+                    page.append(perkHero.toString());
+                  page.append("</td>");
+                  page.append("<td width = 25%>");
+                    page.append(perkLast.toString());
+                  page.append("</td>");
+                  page.append("<td width = 25%>");
+                    page.append(perkKill.toString());
+                  page.append("</td>");
+                  page.append("<td width = 25%>");
+                    page.append(topTower);
+                  page.append("</td>");
+                page.append("</tr>");
+              page.append("</table>");
+            page.append("</div>");
+          page.append("</body>");
+        page.append("</html>");
+        out.write(page.toString());      
       } catch (Exception e) {
         e.printStackTrace();
       }
