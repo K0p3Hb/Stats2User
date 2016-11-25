@@ -151,7 +151,7 @@ public class MatchDetail2User extends HttpServlet {
               perkKill.append("</tr>");
               perkKill.append("<tr align = \"center\">");
                 perkKill.append("<td>");
-                  perkKill.append(rs1.getInt(5) + "kills<br>" + rs1.getInt(7) + "assists");
+                  perkKill.append(rs1.getInt(5) + " kills<br>" + rs1.getInt(7) + " assists");
                 perkKill.append("</td>");
               perkKill.append("</tr>");
               perkKill.append("<tr align = \"center\">");
@@ -175,12 +175,12 @@ public class MatchDetail2User extends HttpServlet {
               perkTower.append("</tr>");
               perkTower.append("<tr align = \"center\">");
                 perkTower.append("<td>");
-                  perkTower.append(rs1.getInt(5) + "Towers<br>" + rs1.getInt(7) + "assists");
+                  perkTower.append(rs1.getInt(16) + " tower <br> damage dealt");
                 perkTower.append("</td>");
               perkTower.append("</tr>");
               perkTower.append("<tr align = \"center\">");
                 perkTower.append("<td>");
-                  perkTower.append(rs1.getLong(21) + "% <br>of command Towers");
+                  perkTower.append(rs1.getLong(17) + "% <br>of command damage");
                 perkTower.append("</td>");
               perkTower.append("</tr>");
             perkTower.append("</table>");
@@ -421,7 +421,7 @@ public class MatchDetail2User extends HttpServlet {
                     page.append(perkKill.toString());
                   page.append("</td>");
                   page.append("<td width = 25%>");
-                    page.append(topTower);
+                    page.append(perkTower.toString());
                   page.append("</td>");
                 page.append("</tr>");
               page.append("</table>");
