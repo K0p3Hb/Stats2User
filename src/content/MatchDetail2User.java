@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import sun.swing.text.CountingPrintable;
-
 /**
  * Servlet implementation class MatchDetail2User
  */
@@ -34,7 +32,7 @@ public class MatchDetail2User extends HttpServlet {
     try {
       long id = Long.valueOf(request.getParameter("id"));
       // long id = 1762832017L;     
-      StringBuilder  slotsDire = new StringBuilder(),slotsRadiant = new StringBuilder(), matchOverView = new StringBuilder(), perks = new StringBuilder();
+      StringBuilder  slotsDire = new StringBuilder(),slotsRadiant = new StringBuilder(), matchOverView = new StringBuilder();
       // создаём пустой коннект к базе
       Connection connect = null;
       try {
@@ -428,9 +426,24 @@ public class MatchDetail2User extends HttpServlet {
             page.append("</div>");
           page.append("</body>");
         page.append("</html>");
-        out.write(page.toString());      
+        out.write(page.toString());
+        try{
+          statementMatch.close();
+          statementSlot.close();
+          rs.close();
+          rs1.close();
+        }
+        catch (Exception e) {
+          e.printStackTrace();
+        }
       } catch (Exception e) {
         e.printStackTrace();
+      }finally{
+        try{
+          connect.close();
+        }catch(Exception ex){
+          ex.printStackTrace();
+        }
       }
     } catch (Exception e) {
       e.printStackTrace();
