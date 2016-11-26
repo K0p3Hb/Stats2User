@@ -42,6 +42,13 @@ public class Content extends HttpServlet {
       while(rs.next()){
         allMathes += "<A href = \"/Stats2User/MatchDetail2User?id=" + rs.getLong(1) + "\">" + rs.getLong(1) + "\n</br>";
       }
+      try{
+        rs.close();
+        statement.close();
+        connect.close();
+      }catch (Exception e){
+        e.printStackTrace();
+      }
     }catch (Exception e){
       e.printStackTrace();
     }
